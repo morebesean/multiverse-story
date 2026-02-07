@@ -2,18 +2,22 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, ArrowLeft, Share2 } from "lucide-react";
+import { Loader2, ArrowLeft, Share2, RefreshCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { useLanguage } from "@/components/language-provider";
+import { Header } from "@/components/header";
+import { Button } from "@/components/ui/button";
 
 export default function ResultPage() {
     const router = useRouter();
+    const { t } = useLanguage();
+
     const [isLoading, setIsLoading] = useState(true);
     const [story, setStory] = useState("");
     const [data, setData] = useState<any>(null);
     const hasFetched = useRef(false);
 
     useEffect(() => {
-        // Prevent double fetch in React Strict Mode
         if (hasFetched.current) return;
 
         const savedData = localStorage.getItem("multiverse_user_data");
@@ -58,7 +62,7 @@ export default function ResultPage() {
                 }
             } catch (error) {
                 console.error("Error generating story:", error);
-                alert("이야기를 생성하는 중 문제가 발생했습니다.");
+                alert("Error generating story");
                 setIsLoading(false);
             }
         };
@@ -68,59 +72,62 @@ export default function ResultPage() {
 
     if (isLoading) {
         return (
-            <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
-                <Loader2 className="w-10 h-10 text-purple-500 animate-spin mb-4" />
-                <p className="text-xl font-light text-gray-300 animate-pulse text-center">
-                    <span className="block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
-                        멀티버스 접속 중...
+            <main className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
+                <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+                <p className="text-xl font-light text-muted-foreground animate-pulse text-center">
+                    <span className="block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-2">
+                        Multiverse Loading...
                     </span>
-                    당신의 다른 가능성을 탐색하고 있습니다.
+                    {t("result.loading")}
                 </p>
             </main>
         );
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-black text-white selection:bg-purple-500/30">
-            <div className="max-w-3xl w-full space-y-8 animate-fade-in-up">
+        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-background text-foreground transition-colors duration-300">
+            <Header />
+
+            <div className="relative z-10 max-w-3xl w-full space-y-8 pt-20 animate-fade-in-up">
 
                 {/* Header */}
                 <div className="space-y-2 text-center">
-                    <span className="inline-block px-3 py-1 bg-purple-900/30 text-purple-300 text-xs rounded-full border border-purple-500/30 mb-2">
+                    <span className="inline-block px-3 py-1 bg-purple-500/10 text-purple-500 text-xs rounded-full border border-purple-500/20 mb-2 font-mono">
                         Multiverse Story No. #824
                     </span>
                     <h1 className="text-3xl md:text-4xl font-bold">
-                        {data?.nickname}님의 새로운 이야기
+                        {data?.nickname}{t("result.title")}
                     </h1>
+                    <p className="text-muted-foreground">
+                        {t("result.choice")} <span className="text-foreground font-medium">{data?.alternateChoice}</span>
+                    </p>
                 </div>
 
                 {/* Story Viewer */}
-                <div className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm shadow-2xl shadow-purple-900/20 max-h-[60vh] overflow-y-auto custom-scrollbar">
-                    <div className="prose prose-invert prose-purple max-w-none leading-relaxed">
+                <div className="bg-card p-8 rounded-3xl border border-border shadow-2xl shadow-purple-500/10 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                    <div className="prose dark:prose-invert prose-purple max-w-none leading-relaxed">
                         <ReactMarkdown>{story}</ReactMarkdown>
                     </div>
-                    {story.length === 0 && !isLoading && (
-                        <p className="text-gray-500">이야기를 불러오지 못했습니다.</p>
-                    )}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                    <button
+                    <Button
+                        variant="secondary"
                         onClick={() => router.push("/input")}
-                        className="flex items-center justify-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-gray-300"
+                        className="gap-2"
                     >
-                        <ArrowLeft className="w-4 h-4" />
-                        다른 선택 해보기
-                    </button>
+                        <RefreshCw className="w-4 h-4" />
+                        {t("result.retry")}
+                    </Button>
 
-                    <button
-                        onClick={() => alert("공유 기능은 준비 중입니다!")}
-                        className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-full font-semibold transition-all shadow-lg hover:shadow-purple-500/30"
+                    <Button
+                        onClick={() => alert("Coming Soon!")}
+                        className="gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 border-none"
                     >
                         <Share2 className="w-4 h-4" />
-                        이야기 공유하기
-                    </button>
+                        {t("result.share")}
+                    </Button>
                 </div>
 
             </div>

@@ -3,9 +3,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Sparkles, Save } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
+import { Header } from "@/components/header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function InputPage() {
     const router = useRouter();
+    const { t } = useLanguage();
+
     const [formData, setFormData] = useState({
         nickname: "",
         currentSituation: "",
@@ -13,7 +20,6 @@ export default function InputPage() {
     });
     const [isLoading, setIsLoading] = useState(true);
 
-    // Load data from LocalStorage on mount
     useEffect(() => {
         const savedData = localStorage.getItem("multiverse_user_data");
         if (savedData) {
@@ -32,102 +38,86 @@ export default function InputPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Save to LocalStorage
         localStorage.setItem("multiverse_user_data", JSON.stringify(formData));
-
-        // Navigate to result page
         router.push("/result");
     };
 
-    if (isLoading) return null; // Prevent hydration mismatch
+    if (isLoading) return null;
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-black text-white selection:bg-purple-500/30">
+        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-background text-foreground transition-colors duration-300">
+
             {/* Background Effects */}
-            <div className="fixed inset-0 z-0">
-                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-900/20 rounded-full blur-3xl opacity-20" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/20 rounded-full blur-3xl opacity-20" />
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-3xl opacity-30" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-3xl opacity-30" />
             </div>
 
-            <div className="relative z-10 max-w-xl w-full space-y-8">
-                <div className="text-center space-y-2">
-                    <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-full mb-4 ring-1 ring-white/10">
-                        <Sparkles className="w-5 h-5 text-purple-400" />
-                    </div>
-                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-                        멀티버스 생성하기
+            <Header />
+
+            <div className="relative z-10 max-w-xl w-full space-y-8 pt-20 animate-fade-in-up">
+                <div className="text-center space-y-4">
+                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
+                        {t("input.title")}
                     </h2>
-                    <p className="text-gray-400">
-                        당신의 이야기를 들려주세요. 다른 우주의 당신을 찾아드립니다.
+                    <p className="text-muted-foreground">
+                        {t("input.subtitle")}
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-3xl border border-border shadow-xl shadow-purple-500/5">
 
-                    {/* Nickname Input */}
                     <div className="space-y-2">
-                        <label htmlFor="nickname" className="text-sm font-medium text-gray-300 ml-1">
-                            이름 (또는 닉네임)
+                        <label htmlFor="nickname" className="text-sm font-medium ml-1">
+                            {t("input.nickname")}
                         </label>
-                        <input
-                            type="text"
+                        <Input
                             id="nickname"
                             name="nickname"
                             required
-                            placeholder="예: 김코딩"
                             value={formData.nickname}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all placeholder:text-gray-600"
                         />
                     </div>
 
-                    {/* Current Situation Input */}
                     <div className="space-y-2">
-                        <label htmlFor="currentSituation" className="text-sm font-medium text-gray-300 ml-1">
-                            현재 당신의 모습은?
+                        <label htmlFor="currentSituation" className="text-sm font-medium ml-1">
+                            {t("input.currentSituation")}
                         </label>
-                        <textarea
+                        <Textarea
                             id="currentSituation"
                             name="currentSituation"
                             required
                             rows={3}
-                            placeholder="예: 매일 야근에 시달리는 3년차 개발자"
                             value={formData.currentSituation}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all placeholder:text-gray-600 resize-none"
                         />
                     </div>
 
-                    {/* Alternate Choice Input */}
                     <div className="space-y-2">
-                        <label htmlFor="alternateChoice" className="text-sm font-medium text-purple-300 ml-1">
-                            그때 만약... 어떤 선택을 했다면?
+                        <label htmlFor="alternateChoice" className="text-sm font-medium text-purple-500 ml-1">
+                            {t("input.alternateChoice")}
                         </label>
-                        <textarea
+                        <Textarea
                             id="alternateChoice"
                             name="alternateChoice"
                             required
                             rows={3}
-                            placeholder="예: 취업 대신 세계여행을 떠났다면?"
                             value={formData.alternateChoice}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-purple-900/10 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all placeholder:text-gray-600 resize-none"
+                            className="border-purple-500/30 bg-purple-500/5 focus-visible:ring-purple-500"
                         />
                     </div>
 
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        className="group w-full flex items-center justify-center gap-2 py-4 bg-white text-black rounded-xl font-bold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                        이야기 확인하러 가기
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <Button type="submit" size="lg" className="w-full group">
+                        {t("input.submit")}
+                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
                 </form>
 
-                <p className="text-center text-xs text-gray-600">
-                    <Save className="w-3 h-3 inline mr-1" />
-                    입력하신 내용은 브라우저에 자동 저장됩니다
+                <p className="text-center text-xs text-muted-foreground flex items-center justify-center gap-1">
+                    <Save className="w-3 h-3" />
+                    {t("input.save")}
                 </p>
             </div>
         </main>

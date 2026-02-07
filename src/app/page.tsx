@@ -1,56 +1,85 @@
+"use client";
+
 import Link from "next/link";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, User, Zap } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/header";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-black text-white selection:bg-purple-500/30">
+    <main className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden bg-background text-foreground transition-colors duration-300">
 
       {/* Background Effects */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-3xl opacity-30 animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-3xl opacity-30 animate-pulse delay-1000" />
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-[100px] opacity-50 animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[100px] opacity-50 animate-pulse delay-1000" />
       </div>
 
-      <div className="relative z-10 max-w-3xl w-full text-center space-y-12">
+      <Header />
 
-        {/* Header / Logo Area */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-2xl shadow-2xl shadow-purple-500/20">
-            <Sparkles className="w-8 h-8 text-purple-400" />
+      <div className="relative z-10 max-w-4xl w-full text-center space-y-16 px-6 pt-20">
+
+        {/* Hero Section */}
+        <div className="space-y-8 animate-fade-in-up">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 pb-2">
+            {t("landing.title")}
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed whitespace-pre-line">
+            {t("landing.subtitle")}
+          </p>
+
+          <div className="pt-4 flex flex-col items-center gap-4">
+            <Link href="/input">
+              <Button size="lg" className="group text-lg px-8 py-6 rounded-full">
+                {t("landing.cta")}
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <p className="text-sm text-muted-foreground">
+              {t("landing.login")}
+            </p>
           </div>
         </div>
 
-        {/* Hero Section */}
-        <div className="space-y-6">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-            Multiverse Story
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed">
-            "그때 만약 다른 선택을 했다면?"
-            <br />
-            당신의 또 다른 인생 이야기를 AI가 들려드립니다.
-          </p>
+        {/* Features / How it works */}
+        <div className="grid md:grid-cols-3 gap-8 py-12 border-t border-border/50">
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-purple-500/50 transition-colors">
+            <div className="p-3 bg-purple-500/10 rounded-full">
+              <User className="w-6 h-6 text-purple-500" />
+            </div>
+            <h3 className="font-semibold text-lg">1. Profile</h3>
+            <p className="text-sm text-muted-foreground">
+              Tell us who you are and what your life looks like now.
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-pink-500/50 transition-colors">
+            <div className="p-3 bg-pink-500/10 rounded-full">
+              <Zap className="w-6 h-6 text-pink-500" />
+            </div>
+            <h3 className="font-semibold text-lg">2. Choice</h3>
+            <p className="text-sm text-muted-foreground">
+              What was the turning point? What if you chose differently?
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-blue-500/50 transition-colors">
+            <div className="p-3 bg-blue-500/10 rounded-full">
+              <BookOpen className="w-6 h-6 text-blue-500" />
+            </div>
+            <h3 className="font-semibold text-lg">3. Story</h3>
+            <p className="text-sm text-muted-foreground">
+              AI generates your alternate reality story in real-time.
+            </p>
+          </div>
         </div>
 
-        {/* CTA Button */}
-        <div className="pt-8">
-          <Link
-            href="/input"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.5)]"
-          >
-            멀티버스 확인하기
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-
-          <p className="mt-6 text-sm text-gray-600">
-            로그인 없이 바로 시작할 수 있습니다
-          </p>
-        </div>
       </div>
 
       {/* Footer */}
-      <footer className="fixed bottom-6 text-xs text-gray-700">
-        Powered by OpenAI & Vercel
+      <footer className="absolute bottom-6 text-xs text-muted-foreground">
+        © 2024 Multiverse Story. Powered by OpenAI.
       </footer>
     </main>
   );
