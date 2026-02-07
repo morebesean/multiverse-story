@@ -86,7 +86,6 @@ export default function Home() {
             <Link href="/profile" className="w-full">
               <Button size="lg" className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90">
                 {t("landing.cta")}
-                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
           </div>

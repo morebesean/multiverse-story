@@ -95,7 +95,7 @@ export default function ProfilePage() {
                             value={formData.currentSituation}
                             onChange={handleChange}
                             placeholder="Ex. I've been working as a developer for 3 years, but I'm thinking of starting a bakery..."
-                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-base leading-relaxed p-6 min-h-[150px] resize-none rounded-2xl transition-all"
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-lg leading-relaxed p-6 min-h-[150px] resize-none rounded-2xl transition-all"
                         />
                     </div>
                 </form>
@@ -117,7 +117,6 @@ export default function ProfilePage() {
                             className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20"
                         >
                             {t("landing.feature.choice")}
-                            <ArrowRight className="ml-2 w-5 h-5" />
                         </Button>
                     </div>
                 </div>

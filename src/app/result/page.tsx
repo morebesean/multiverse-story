@@ -107,7 +107,7 @@ export default function ResultPage() {
                             Multiverse #824
                         </span>
                     </div>
-                    <h1 className="text-2xl font-bold leading-tight">
+                    <h1 className="text-3xl font-bold leading-tight">
                         <span className="text-primary">{data?.nickname}</span>{t("result.title")}
                     </h1>
                     <div className="p-4 bg-secondary/30 rounded-xl border border-border/50">
