@@ -132,7 +132,7 @@ export default function ResultPage() {
                             variant="secondary"
                             size="lg"
                             onClick={() => router.push("/scenario")}
-                            className="w-full font-bold h-12 rounded-xl"
+                            className="w-full text-lg h-14 font-bold rounded-xl"
                         >
                             {t("result.retry")}
                         </Button>
@@ -140,7 +140,7 @@ export default function ResultPage() {
                         <Button
                             size="lg"
                             onClick={() => alert("Coming Soon!")}
-                            className="w-full font-bold h-12 rounded-xl"
+                            className="w-full text-lg h-14 font-bold rounded-xl"
                         >
                             {t("result.share")}
                         </Button>
