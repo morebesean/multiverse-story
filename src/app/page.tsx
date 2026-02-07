@@ -32,7 +32,7 @@ export default function Home() {
           </p>
 
           <div className="pt-4 flex flex-col items-center gap-4">
-            <Link href="/input">
+            <Link href="/profile">
               <Button size="lg" className="group text-lg px-8 py-6 rounded-full">
                 {t("landing.cta")}
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -51,7 +51,7 @@ export default function Home() {
               <User className="w-6 h-6 text-primary" />
             </div>
             <h3 className="font-semibold text-lg">{t("landing.feature.profile")}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground whitespace-pre-line">
               {t("landing.feature.profile.desc")}
             </p>
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
               <Zap className="w-6 h-6 text-pink-500" />
             </div>
             <h3 className="font-semibold text-lg">{t("landing.feature.choice")}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground whitespace-pre-line">
               {t("landing.feature.choice.desc")}
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function Home() {
               <BookOpen className="w-6 h-6 text-blue-500" />
             </div>
             <h3 className="font-semibold text-lg">{t("landing.feature.story")}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground whitespace-pre-line">
               {t("landing.feature.story.desc")}
             </p>
           </div>

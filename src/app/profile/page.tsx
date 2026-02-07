@@ -9,19 +9,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function InputPage() {
+export default function ProfilePage() {
     const router = useRouter();
     const { t } = useLanguage();
 
     const [formData, setFormData] = useState({
         nickname: "",
         currentSituation: "",
-        alternateChoice: "",
     });
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const savedData = localStorage.getItem("multiverse_user_data");
+        // Only load basic info
+        const savedData = localStorage.getItem("multiverse_base_info");
         if (savedData) {
             setFormData(JSON.parse(savedData));
         }
@@ -38,8 +38,9 @@ export default function InputPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        localStorage.setItem("multiverse_user_data", JSON.stringify(formData));
-        router.push("/result");
+        // Save to localized store (Base Info)
+        localStorage.setItem("multiverse_base_info", JSON.stringify(formData));
+        router.push("/scenario");
     };
 
     if (isLoading) return null;
@@ -61,7 +62,7 @@ export default function InputPage() {
                         {t("input.title")}
                     </h2>
                     <p className="text-muted-foreground">
-                        {t("input.subtitle")}
+                        {t("landing.feature.profile.desc").split('\n')[1] || t("landing.feature.profile.desc")}
                     </p>
                 </div>
 
@@ -77,6 +78,7 @@ export default function InputPage() {
                             required
                             value={formData.nickname}
                             onChange={handleChange}
+                            placeholder="e.g. Gil-dong"
                         />
                     </div>
 
@@ -88,29 +90,15 @@ export default function InputPage() {
                             id="currentSituation"
                             name="currentSituation"
                             required
-                            rows={3}
+                            rows={4}
                             value={formData.currentSituation}
                             onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="space-y-2">
-                        <label htmlFor="alternateChoice" className="text-sm font-medium text-primary ml-1">
-                            {t("input.alternateChoice")}
-                        </label>
-                        <Textarea
-                            id="alternateChoice"
-                            name="alternateChoice"
-                            required
-                            rows={3}
-                            value={formData.alternateChoice}
-                            onChange={handleChange}
-                            className="border-primary/30 bg-primary/5 focus-visible:ring-primary"
+                            placeholder="e.g. I am a software developer working at a startup..."
                         />
                     </div>
 
                     <Button type="submit" size="lg" className="w-full group">
-                        {t("input.submit")}
+                        {t("landing.feature.choice")} {/* Next Step Label */}
                         <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                 </form>

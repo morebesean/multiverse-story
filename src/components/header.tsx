@@ -10,23 +10,33 @@ import { usePathname, useRouter } from "next/navigation";
 export function Header() {
     const pathname = usePathname();
     const router = useRouter();
-    const isHome = pathname === "/";
-    const isInput = pathname === "/input";
-    // const isResult = pathname === "/result"; 
 
-    // Logic requested by user:
-    // /input: Only Back button (No Logo)
-    // /result: Only Home button (Logo) (No Back button)
-    // /: Logo (No Back button)
+    // Route logic:
+    // / (Landing) -> No Back
+    // /profile (Step 2) -> Back to /
+    // /scenario (Step 3) -> Back to /profile
+    // /result (Step 4) -> Home Logo (No Back)
 
-    const showLogo = !isInput;
-    const showBackButton = isInput; // Only show back button on input page as requested
+    const isLanding = pathname === "/";
+    const isProfile = pathname === "/profile";
+    const isScenario = pathname === "/scenario";
+    const isResult = pathname === "/result";
+
+    const showBackButton = isProfile || isScenario;
+    const showLogo = isLanding || isResult;
+
+    // Custom back logic
+    const handleBack = () => {
+        if (isProfile) router.push("/");
+        else if (isScenario) router.push("/profile");
+        else router.back();
+    };
 
     return (
         <header className="absolute top-0 w-full p-6 flex justify-between items-center z-50">
             <div className="flex items-center gap-2">
                 {showBackButton && (
-                    <Button variant="ghost" size="sm" onClick={() => router.back()} className="mr-2 rounded-full w-10 h-10 p-0">
+                    <Button variant="ghost" size="sm" onClick={handleBack} className="mr-2 rounded-full w-10 h-10 p-0">
                         <ArrowLeft className="w-5 h-5" />
                     </Button>
                 )}

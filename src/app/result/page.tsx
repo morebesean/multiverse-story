@@ -20,14 +20,24 @@ export default function ResultPage() {
     useEffect(() => {
         if (hasFetched.current) return;
 
-        const savedData = localStorage.getItem("multiverse_user_data");
-        if (!savedData) {
-            router.push("/input");
+        // Load separated data
+        const baseInfoStr = localStorage.getItem("multiverse_base_info");
+        const scenarioInfoStr = localStorage.getItem("multiverse_scenario_info");
+
+        if (!baseInfoStr) {
+            router.push("/profile"); // No base info -> Go to Step 2
+            return;
+        }
+        if (!scenarioInfoStr) {
+            router.push("/scenario"); // No scenario -> Go to Step 3
             return;
         }
 
-        const parsedData = JSON.parse(savedData);
-        setData(parsedData);
+        const baseInfo = JSON.parse(baseInfoStr);
+        const scenarioInfo = JSON.parse(scenarioInfoStr);
+        const combinedData = { ...baseInfo, ...scenarioInfo };
+
+        setData(combinedData);
         hasFetched.current = true;
 
         const fetchStory = async () => {
@@ -36,9 +46,9 @@ export default function ResultPage() {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        nickname: parsedData.nickname,
-                        currentSituation: parsedData.currentSituation,
-                        alternateChoice: parsedData.alternateChoice,
+                        nickname: combinedData.nickname,
+                        currentSituation: combinedData.currentSituation,
+                        alternateChoice: combinedData.alternateChoice,
                     }),
                 });
 
@@ -114,7 +124,7 @@ export default function ResultPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                     <Button
                         variant="secondary"
-                        onClick={() => router.push("/input")}
+                        onClick={() => router.push("/scenario")} // Retry goes to Step 3, not Step 2
                         className="gap-2"
                     >
                         <RefreshCw className="w-4 h-4" />
