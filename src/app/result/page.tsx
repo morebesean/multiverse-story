@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, RefreshCw, Share2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "@/components/language-provider";
 import { Header } from "@/components/header";
@@ -95,10 +95,10 @@ export default function ResultPage() {
     }
 
     return (
-        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-32">
+        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-40">
             <Header />
 
-            <div className="w-full px-6 pt-4 space-y-6 animate-fade-in-up">
+            <div className="w-full px-6 pt-24 space-y-6 animate-fade-in-up">
 
                 {/* Header Information */}
                 <div className="space-y-3 pb-6 border-b border-border/50">
@@ -124,26 +124,27 @@ export default function ResultPage() {
             </div>
 
             {/* Fixed Bottom CTA */}
-            <div className="fixed bottom-0 w-full max-w-[600px] p-4 bg-background/90 backdrop-blur-xl border-t border-border z-40">
-                <div className="grid grid-cols-2 gap-3">
-                    <Button
-                        variant="secondary"
-                        size="lg"
-                        onClick={() => router.push("/scenario")}
-                        className="w-full font-bold h-12 rounded-xl"
-                    >
-                        <RefreshCw className="w-4 h-4 mr-2" />
-                        {t("result.retry")}
-                    </Button>
+            <div className="fixed bottom-0 w-full max-w-[600px] z-40">
+                <div className="w-full h-32 bg-gradient-to-t from-background via-background/90 to-transparent absolute bottom-0 left-0 -z-10" />
+                <div className="p-6 pb-8">
+                    <div className="grid grid-cols-2 gap-3">
+                        <Button
+                            variant="secondary"
+                            size="lg"
+                            onClick={() => router.push("/scenario")}
+                            className="w-full font-bold h-12 rounded-xl"
+                        >
+                            {t("result.retry")}
+                        </Button>
 
-                    <Button
-                        size="lg"
-                        onClick={() => alert("Coming Soon!")}
-                        className="w-full font-bold h-12 rounded-xl"
-                    >
-                        <Share2 className="w-4 h-4 mr-2" />
-                        {t("result.share")}
-                    </Button>
+                        <Button
+                            size="lg"
+                            onClick={() => alert("Coming Soon!")}
+                            className="w-full font-bold h-12 rounded-xl"
+                        >
+                            {t("result.share")}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </main>

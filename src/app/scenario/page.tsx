@@ -33,10 +33,10 @@ export default function ScenarioPage() {
     if (isLoading) return null;
 
     return (
-        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-32">
+        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-40">
             <Header />
 
-            <div className="w-full px-6 pt-4 space-y-8 animate-fade-in-up">
+            <div className="w-full px-6 pt-24 space-y-8 animate-fade-in-up">
 
                 {/* Title Section */}
                 <div className="space-y-4 text-left">
@@ -72,16 +72,19 @@ export default function ScenarioPage() {
             </div>
 
             {/* Fixed Bottom CTA */}
-            <div className="fixed bottom-0 w-full max-w-[600px] p-6 bg-background/80 backdrop-blur-xl border-t border-border z-40">
-                <Button
-                    type="submit"
-                    form="scenario-form"
-                    size="lg"
-                    className="w-full text-lg h-14 font-bold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-none shadow-xl shadow-pink-500/20"
-                >
-                    {t("input.submit")}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+            <div className="fixed bottom-0 w-full max-w-[600px] z-40">
+                <div className="w-full h-32 bg-gradient-to-t from-background via-background/90 to-transparent absolute bottom-0 left-0 -z-10" />
+                <div className="p-6 pb-8">
+                    <Button
+                        type="submit"
+                        form="scenario-form"
+                        size="lg"
+                        className="w-full text-lg h-14 font-bold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-none shadow-xl shadow-pink-500/20"
+                    >
+                        {t("input.submit")}
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                </div>
             </div>
         </main>
     );

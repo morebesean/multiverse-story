@@ -19,7 +19,7 @@ export default function Home() {
 
       <Header />
 
-      <div className="relative z-10 w-full text-center space-y-12 px-6 pt-4 animate-fade-in-up">
+      <div className="relative z-10 w-full text-center space-y-12 px-6 pt-24 animate-fade-in-up">
 
         {/* Hero Section */}
         <div className="space-y-6">
@@ -76,17 +76,20 @@ export default function Home() {
       </div>
 
       {/* Fixed Bottom CTA */}
-      <div className="fixed bottom-0 w-full max-w-[600px] p-6 bg-background/80 backdrop-blur-xl border-t border-border z-50">
-        <div className="flex flex-col items-center gap-3 w-full">
-          <p className="text-xs text-muted-foreground font-medium animate-pulse">
-            {t("landing.login")}
-          </p>
-          <Link href="/profile" className="w-full">
-            <Button size="lg" className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20">
-              {t("landing.cta")}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
+      <div className="fixed bottom-0 w-full max-w-[600px] z-50">
+        <div className="w-full h-24 bg-gradient-to-t from-background via-background/90 to-transparent absolute bottom-0 left-0 -z-10" />
+        <div className="p-6 pb-8">
+          <div className="flex flex-col items-center gap-3 w-full">
+            <p className="text-xs text-muted-foreground font-medium animate-pulse">
+              {t("landing.login")}
+            </p>
+            <Link href="/profile" className="w-full">
+              <Button size="lg" className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90">
+                {t("landing.cta")}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 

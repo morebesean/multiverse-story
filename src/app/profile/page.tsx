@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Save } from "lucide-react";
+import { ArrowRight, Save, UserCircle } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
@@ -44,26 +44,33 @@ export default function ProfilePage() {
     if (isLoading) return null;
 
     return (
-        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-36">
+        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-40">
             <Header />
 
-            <div className="w-full px-6 pt-4 space-y-8 animate-fade-in-up">
+            <div className="w-full px-6 pt-24 space-y-8 animate-fade-in-up">
 
-                {/* Title Section */}
-                <div className="space-y-2 text-left">
-                    <h2 className="text-3xl font-bold text-foreground">
-                        {t("input.title")}
-                    </h2>
-                    <p className="text-muted-foreground whitespace-pre-line leading-relaxed">
-                        {t("landing.feature.profile.desc").split('\n')[1] || t("landing.feature.profile.desc")}
-                    </p>
+                {/* Title Section with Badge */}
+                <div className="space-y-4 text-left">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full">
+                        <UserCircle className="w-3 h-3" />
+                        Basic Profile
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 pb-1">
+                            {t("input.title")}
+                        </h2>
+                        <p className="text-muted-foreground whitespace-pre-line leading-relaxed mt-2">
+                            {t("landing.feature.profile.desc").split('\n')[1] || t("landing.feature.profile.desc")}
+                        </p>
+                    </div>
                 </div>
 
                 {/* Form Section */}
-                <form id="profile-form" onSubmit={handleSubmit} className="space-y-6">
+                <form id="profile-form" onSubmit={handleSubmit} className="space-y-8">
                     <div className="space-y-3">
-                        <label htmlFor="nickname" className="text-sm font-semibold ml-1 text-foreground">
+                        <label htmlFor="nickname" className="text-sm font-semibold ml-1 text-foreground flex items-center gap-2">
                             {t("input.nickname")}
+                            <span className="text-xs font-normal text-muted-foreground">* Required</span>
                         </label>
                         <Input
                             id="nickname"
@@ -72,7 +79,7 @@ export default function ProfilePage() {
                             value={formData.nickname}
                             onChange={handleChange}
                             placeholder="Ex. Hong Gil-dong"
-                            className="bg-secondary/50 border-transparent focus:bg-background focus:border-primary/50 text-lg py-6"
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-lg py-6 rounded-2xl transition-all"
                         />
                     </div>
 
@@ -87,29 +94,32 @@ export default function ProfilePage() {
                             rows={6}
                             value={formData.currentSituation}
                             onChange={handleChange}
-                            placeholder="Ex. I've been working as a developer for 3 years, but..."
-                            className="bg-secondary/50 border-transparent focus:bg-background focus:border-primary/50 text-base leading-relaxed p-4 min-h-[150px]"
+                            placeholder="Ex. I've been working as a developer for 3 years, but I'm thinking of starting a bakery..."
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-base leading-relaxed p-6 min-h-[150px] resize-none rounded-2xl transition-all"
                         />
                     </div>
                 </form>
             </div>
 
             {/* Fixed Bottom CTA */}
-            <div className="fixed bottom-0 w-full max-w-[600px] p-6 bg-background/80 backdrop-blur-xl border-t border-border z-40">
-                <div className="flex flex-col items-center gap-3 w-full">
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium animate-pulse">
-                        <Save className="w-3.5 h-3.5" />
-                        {t("input.save")}
+            <div className="fixed bottom-0 w-full max-w-[600px] z-40">
+                <div className="w-full h-32 bg-gradient-to-t from-background via-background/90 to-transparent absolute bottom-0 left-0 -z-10" />
+                <div className="p-6 pb-8">
+                    <div className="flex flex-col items-center gap-3 w-full">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium animate-pulse">
+                            <Save className="w-3.5 h-3.5" />
+                            {t("input.save")}
+                        </div>
+                        <Button
+                            type="submit"
+                            form="profile-form"
+                            size="lg"
+                            className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20"
+                        >
+                            {t("landing.feature.choice")}
+                            <ArrowRight className="ml-2 w-5 h-5" />
+                        </Button>
                     </div>
-                    <Button
-                        type="submit"
-                        form="profile-form"
-                        size="lg"
-                        className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20"
-                    >
-                        {t("landing.feature.choice")}
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
                 </div>
             </div>
         </main>

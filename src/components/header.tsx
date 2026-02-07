@@ -33,7 +33,8 @@ export function Header() {
     };
 
     return (
-        <header className="sticky top-0 w-full p-6 flex justify-between items-center z-50 bg-background/80 backdrop-blur-md">
+        <header className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] p-6 flex justify-between items-center z-50 bg-background/0 backdrop-blur-[2px]">
+            <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/50 to-transparent -z-10" />
             <div className="flex items-center gap-2">
                 {showBackButton && (
                     <Button variant="ghost" size="sm" onClick={handleBack} className="mr-2 rounded-full w-10 h-10 p-0">
