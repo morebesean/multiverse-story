@@ -11,21 +11,33 @@ export function Header() {
     const pathname = usePathname();
     const router = useRouter();
     const isHome = pathname === "/";
+    const isInput = pathname === "/input";
+    // const isResult = pathname === "/result"; 
+
+    // Logic requested by user:
+    // /input: Only Back button (No Logo)
+    // /result: Only Home button (Logo) (No Back button)
+    // /: Logo (No Back button)
+
+    const showLogo = !isInput;
+    const showBackButton = isInput; // Only show back button on input page as requested
 
     return (
         <header className="absolute top-0 w-full p-6 flex justify-between items-center z-50">
             <div className="flex items-center gap-2">
-                {!isHome && (
+                {showBackButton && (
                     <Button variant="ghost" size="sm" onClick={() => router.back()} className="mr-2 rounded-full w-10 h-10 p-0">
                         <ArrowLeft className="w-5 h-5" />
                     </Button>
                 )}
-                <Link href="/" className="flex items-center gap-2 group">
-                    <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
-                        <Sparkles className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="font-bold text-lg hidden sm:block">Multiverse Story</span>
-                </Link>
+                {showLogo && (
+                    <Link href="/" className="flex items-center gap-2 group">
+                        <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                            <Sparkles className="w-5 h-5 text-primary" />
+                        </div>
+                        <span className="font-bold text-lg hidden sm:block">Multiverse Story</span>
+                    </Link>
+                )}
             </div>
             <div className="flex gap-2">
                 <ThemeToggle />

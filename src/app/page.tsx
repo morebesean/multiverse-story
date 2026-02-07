@@ -50,27 +50,27 @@ export default function Home() {
             <div className="p-3 bg-purple-500/10 rounded-full">
               <User className="w-6 h-6 text-purple-500" />
             </div>
-            <h3 className="font-semibold text-lg">1. Profile</h3>
+            <h3 className="font-semibold text-lg">{t("landing.feature.profile")}</h3>
             <p className="text-sm text-muted-foreground">
-              Tell us who you are and what your life looks like now.
+              {t("landing.feature.profile.desc")}
             </p>
           </div>
           <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-pink-500/50 transition-colors">
             <div className="p-3 bg-pink-500/10 rounded-full">
               <Zap className="w-6 h-6 text-pink-500" />
             </div>
-            <h3 className="font-semibold text-lg">2. Choice</h3>
+            <h3 className="font-semibold text-lg">{t("landing.feature.choice")}</h3>
             <p className="text-sm text-muted-foreground">
-              What was the turning point? What if you chose differently?
+              {t("landing.feature.choice.desc")}
             </p>
           </div>
           <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-blue-500/50 transition-colors">
             <div className="p-3 bg-blue-500/10 rounded-full">
               <BookOpen className="w-6 h-6 text-blue-500" />
             </div>
-            <h3 className="font-semibold text-lg">3. Story</h3>
+            <h3 className="font-semibold text-lg">{t("landing.feature.story")}</h3>
             <p className="text-sm text-muted-foreground">
-              AI generates your alternate reality story in real-time.
+              {t("landing.feature.story.desc")}
             </p>
           </div>
         </div>
