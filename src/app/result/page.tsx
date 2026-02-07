@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, ArrowLeft, Share2, RefreshCw } from "lucide-react";
+import { Loader2, RefreshCw, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "@/components/language-provider";
 import { Header } from "@/components/header";
@@ -25,11 +25,11 @@ export default function ResultPage() {
         const scenarioInfoStr = localStorage.getItem("multiverse_scenario_info");
 
         if (!baseInfoStr) {
-            router.push("/profile"); // No base info -> Go to Step 2
+            router.push("/profile");
             return;
         }
         if (!scenarioInfoStr) {
-            router.push("/scenario"); // No scenario -> Go to Step 3
+            router.push("/scenario");
             return;
         }
 
@@ -82,64 +82,69 @@ export default function ResultPage() {
 
     if (isLoading) {
         return (
-            <main className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
-                <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
-                <p className="text-xl font-light text-muted-foreground animate-pulse text-center">
-                    <span className="block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-pink-500 mb-2">
-                        Multiverse Loading...
+            <main className="flex-1 flex flex-col items-center justify-center min-h-[80vh] bg-background text-foreground">
+                <Loader2 className="w-12 h-12 text-primary animate-spin mb-6" />
+                <div className="text-center space-y-2">
+                    <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-pink-500 animate-pulse">
+                        Generating Multiverse...
                     </span>
-                    {t("result.loading")}
-                </p>
+                    <p className="text-muted-foreground">{t("result.loading")}</p>
+                </div>
             </main>
         );
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-background text-foreground transition-colors duration-300">
+        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-32">
             <Header />
 
-            <div className="relative z-10 max-w-3xl w-full space-y-8 pt-20 animate-fade-in-up">
+            <div className="w-full px-6 pt-4 space-y-6 animate-fade-in-up">
 
-                {/* Header */}
-                <div className="space-y-2 text-center">
-                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20 mb-2 font-mono">
-                        Multiverse Story No. #824
-                    </span>
-                    <h1 className="text-3xl md:text-4xl font-bold">
-                        {data?.nickname}{t("result.title")}
+                {/* Header Information */}
+                <div className="space-y-3 pb-6 border-b border-border/50">
+                    <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 bg-secondary text-secondary-foreground text-[10px] font-bold uppercase tracking-wider rounded-md">
+                            Multiverse #824
+                        </span>
+                    </div>
+                    <h1 className="text-2xl font-bold leading-tight">
+                        <span className="text-primary">{data?.nickname}</span>{t("result.title")}
                     </h1>
-                    <p className="text-muted-foreground">
-                        {t("result.choice")} <span className="text-foreground font-medium">{data?.alternateChoice}</span>
-                    </p>
-                </div>
-
-                {/* Story Viewer */}
-                <div className="bg-card p-8 rounded-3xl border border-border shadow-2xl shadow-primary/10 max-h-[60vh] overflow-y-auto custom-scrollbar">
-                    <div className="prose dark:prose-invert prose-purple max-w-none leading-relaxed">
-                        <ReactMarkdown>{story}</ReactMarkdown>
+                    <div className="p-4 bg-secondary/30 rounded-xl border border-border/50">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wide block mb-1">Choice</span>
+                        <p className="font-medium text-foreground text-sm leading-relaxed">{data?.alternateChoice}</p>
                     </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                {/* Story Text */}
+                <div className="prose dark:prose-invert prose-base max-w-none leading-loose text-foreground/90">
+                    <ReactMarkdown>{story}</ReactMarkdown>
+                </div>
+
+            </div>
+
+            {/* Fixed Bottom CTA */}
+            <div className="fixed bottom-0 w-full max-w-[600px] p-4 bg-background/90 backdrop-blur-xl border-t border-border z-40">
+                <div className="grid grid-cols-2 gap-3">
                     <Button
                         variant="secondary"
-                        onClick={() => router.push("/scenario")} // Retry goes to Step 3, not Step 2
-                        className="gap-2"
+                        size="lg"
+                        onClick={() => router.push("/scenario")}
+                        className="w-full font-bold h-12 rounded-xl"
                     >
-                        <RefreshCw className="w-4 h-4" />
+                        <RefreshCw className="w-4 h-4 mr-2" />
                         {t("result.retry")}
                     </Button>
 
                     <Button
+                        size="lg"
                         onClick={() => alert("Coming Soon!")}
-                        className="gap-2 border-none bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-primary-foreground"
+                        className="w-full font-bold h-12 rounded-xl"
                     >
-                        <Share2 className="w-4 h-4" />
+                        <Share2 className="w-4 h-4 mr-2" />
                         {t("result.share")}
                     </Button>
                 </div>
-
             </div>
         </main>
     );

@@ -20,7 +20,6 @@ export default function ProfilePage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Only load basic info
         const savedData = localStorage.getItem("multiverse_base_info");
         if (savedData) {
             setFormData(JSON.parse(savedData));
@@ -38,7 +37,6 @@ export default function ProfilePage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Save to localized store (Base Info)
         localStorage.setItem("multiverse_base_info", JSON.stringify(formData));
         router.push("/scenario");
     };
@@ -46,30 +44,25 @@ export default function ProfilePage() {
     if (isLoading) return null;
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-background text-foreground transition-colors duration-300">
-
-            {/* Background Effects */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-3xl opacity-100" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-3xl opacity-100" />
-            </div>
-
+        <main className="flex-1 flex flex-col items-center justify-start relative bg-background text-foreground pb-36">
             <Header />
 
-            <div className="relative z-10 max-w-xl w-full space-y-8 pt-20 animate-fade-in-up">
-                <div className="text-center space-y-4">
-                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500">
+            <div className="w-full px-6 pt-4 space-y-8 animate-fade-in-up">
+
+                {/* Title Section */}
+                <div className="space-y-2 text-left">
+                    <h2 className="text-3xl font-bold text-foreground">
                         {t("input.title")}
                     </h2>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground whitespace-pre-line leading-relaxed">
                         {t("landing.feature.profile.desc").split('\n')[1] || t("landing.feature.profile.desc")}
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-3xl border border-border shadow-xl shadow-primary/5">
-
-                    <div className="space-y-2">
-                        <label htmlFor="nickname" className="text-sm font-medium ml-1 text-foreground">
+                {/* Form Section */}
+                <form id="profile-form" onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-3">
+                        <label htmlFor="nickname" className="text-sm font-semibold ml-1 text-foreground">
                             {t("input.nickname")}
                         </label>
                         <Input
@@ -78,35 +71,46 @@ export default function ProfilePage() {
                             required
                             value={formData.nickname}
                             onChange={handleChange}
-                            placeholder="e.g. Gil-dong"
+                            placeholder="Ex. Hong Gil-dong"
+                            className="bg-secondary/50 border-transparent focus:bg-background focus:border-primary/50 text-lg py-6"
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <label htmlFor="currentSituation" className="text-sm font-medium ml-1 text-foreground">
+                    <div className="space-y-3">
+                        <label htmlFor="currentSituation" className="text-sm font-semibold ml-1 text-foreground">
                             {t("input.currentSituation")}
                         </label>
                         <Textarea
                             id="currentSituation"
                             name="currentSituation"
                             required
-                            rows={4}
+                            rows={6}
                             value={formData.currentSituation}
                             onChange={handleChange}
-                            placeholder="e.g. I am a software developer working at a startup..."
+                            placeholder="Ex. I've been working as a developer for 3 years, but..."
+                            className="bg-secondary/50 border-transparent focus:bg-background focus:border-primary/50 text-base leading-relaxed p-4 min-h-[150px]"
                         />
                     </div>
-
-                    <Button type="submit" size="lg" className="w-full group">
-                        {t("landing.feature.choice")} {/* Next Step Label */}
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
                 </form>
+            </div>
 
-                <p className="text-center text-xs text-muted-foreground flex items-center justify-center gap-1">
-                    <Save className="w-3 h-3" />
-                    {t("input.save")}
-                </p>
+            {/* Fixed Bottom CTA */}
+            <div className="fixed bottom-0 w-full max-w-[600px] p-6 bg-background/80 backdrop-blur-xl border-t border-border z-40">
+                <div className="flex flex-col items-center gap-3 w-full">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium animate-pulse">
+                        <Save className="w-3.5 h-3.5" />
+                        {t("input.save")}
+                    </div>
+                    <Button
+                        type="submit"
+                        form="profile-form"
+                        size="lg"
+                        className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20"
+                    >
+                        {t("landing.feature.choice")}
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                </div>
             </div>
         </main>
     );

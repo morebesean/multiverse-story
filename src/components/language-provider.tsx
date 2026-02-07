@@ -56,8 +56,8 @@ const translations: Translations = {
         "result.loading": "다른 차원의 당신을 찾고 있습니다...",
         "result.title": "님의 새로운 이야기",
         "result.choice": "선택:",
-        "result.retry": "다시 선택하러 가기",
-        "result.share": "이야기 공유하기",
+        "result.retry": "다시 입력",
+        "result.share": "공유하기",
     },
 };
 
