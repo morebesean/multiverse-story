@@ -75,7 +75,7 @@ export default function ResultPage() {
             <main className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
                 <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
                 <p className="text-xl font-light text-muted-foreground animate-pulse text-center">
-                    <span className="block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-2">
+                    <span className="block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-pink-500 mb-2">
                         Multiverse Loading...
                     </span>
                     {t("result.loading")}
@@ -92,7 +92,7 @@ export default function ResultPage() {
 
                 {/* Header */}
                 <div className="space-y-2 text-center">
-                    <span className="inline-block px-3 py-1 bg-purple-500/10 text-purple-500 text-xs rounded-full border border-purple-500/20 mb-2 font-mono">
+                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20 mb-2 font-mono">
                         Multiverse Story No. #824
                     </span>
                     <h1 className="text-3xl md:text-4xl font-bold">
@@ -104,7 +104,7 @@ export default function ResultPage() {
                 </div>
 
                 {/* Story Viewer */}
-                <div className="bg-card p-8 rounded-3xl border border-border shadow-2xl shadow-purple-500/10 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                <div className="bg-card p-8 rounded-3xl border border-border shadow-2xl shadow-primary/10 max-h-[60vh] overflow-y-auto custom-scrollbar">
                     <div className="prose dark:prose-invert prose-purple max-w-none leading-relaxed">
                         <ReactMarkdown>{story}</ReactMarkdown>
                     </div>
@@ -123,7 +123,7 @@ export default function ResultPage() {
 
                     <Button
                         onClick={() => alert("Coming Soon!")}
-                        className="gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 border-none"
+                        className="gap-2 border-none bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-primary-foreground"
                     >
                         <Share2 className="w-4 h-4" />
                         {t("result.share")}

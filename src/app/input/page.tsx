@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Sparkles, Save } from "lucide-react";
+import { ArrowRight, Save } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
@@ -49,15 +49,15 @@ export default function InputPage() {
 
             {/* Background Effects */}
             <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-3xl opacity-30" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-3xl opacity-30" />
+                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-3xl opacity-100" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-3xl opacity-100" />
             </div>
 
             <Header />
 
             <div className="relative z-10 max-w-xl w-full space-y-8 pt-20 animate-fade-in-up">
                 <div className="text-center space-y-4">
-                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
+                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500">
                         {t("input.title")}
                     </h2>
                     <p className="text-muted-foreground">
@@ -65,10 +65,10 @@ export default function InputPage() {
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-3xl border border-border shadow-xl shadow-purple-500/5">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-3xl border border-border shadow-xl shadow-primary/5">
 
                     <div className="space-y-2">
-                        <label htmlFor="nickname" className="text-sm font-medium ml-1">
+                        <label htmlFor="nickname" className="text-sm font-medium ml-1 text-foreground">
                             {t("input.nickname")}
                         </label>
                         <Input
@@ -81,7 +81,7 @@ export default function InputPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="currentSituation" className="text-sm font-medium ml-1">
+                        <label htmlFor="currentSituation" className="text-sm font-medium ml-1 text-foreground">
                             {t("input.currentSituation")}
                         </label>
                         <Textarea
@@ -95,7 +95,7 @@ export default function InputPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="alternateChoice" className="text-sm font-medium text-purple-500 ml-1">
+                        <label htmlFor="alternateChoice" className="text-sm font-medium text-primary ml-1">
                             {t("input.alternateChoice")}
                         </label>
                         <Textarea
@@ -105,7 +105,7 @@ export default function InputPage() {
                             rows={3}
                             value={formData.alternateChoice}
                             onChange={handleChange}
-                            className="border-purple-500/30 bg-purple-500/5 focus-visible:ring-purple-500"
+                            className="border-primary/30 bg-primary/5 focus-visible:ring-primary"
                         />
                     </div>
 

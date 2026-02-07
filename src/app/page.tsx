@@ -14,8 +14,8 @@ export default function Home() {
 
       {/* Background Effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-[100px] opacity-50 animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[100px] opacity-50 animate-pulse delay-1000" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[100px] opacity-100 animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[100px] opacity-100 animate-pulse delay-1000" />
       </div>
 
       <Header />
@@ -24,7 +24,7 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="space-y-8 animate-fade-in-up">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 pb-2">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500 pb-2">
             {t("landing.title")}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed whitespace-pre-line">
@@ -46,16 +46,16 @@ export default function Home() {
 
         {/* Features / How it works */}
         <div className="grid md:grid-cols-3 gap-8 py-12 border-t border-border/50">
-          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-purple-500/50 transition-colors">
-            <div className="p-3 bg-purple-500/10 rounded-full">
-              <User className="w-6 h-6 text-purple-500" />
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-primary/50 transition-colors">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <User className="w-6 h-6 text-primary" />
             </div>
             <h3 className="font-semibold text-lg">{t("landing.feature.profile")}</h3>
             <p className="text-sm text-muted-foreground">
               {t("landing.feature.profile.desc")}
             </p>
           </div>
-          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-pink-500/50 transition-colors">
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-pink-500/50 transition-colors">
             <div className="p-3 bg-pink-500/10 rounded-full">
               <Zap className="w-6 h-6 text-pink-500" />
             </div>
@@ -64,7 +64,7 @@ export default function Home() {
               {t("landing.feature.choice.desc")}
             </p>
           </div>
-          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-blue-500/50 transition-colors">
+          <div className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-card border border-border shadow-sm hover:border-blue-500/50 transition-colors">
             <div className="p-3 bg-blue-500/10 rounded-full">
               <BookOpen className="w-6 h-6 text-blue-500" />
             </div>
