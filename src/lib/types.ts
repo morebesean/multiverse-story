@@ -40,4 +40,5 @@ export interface MultiverseStory {
     };
     message_to_reality: string;
     teaser: string;
+    full_story?: string;
 }

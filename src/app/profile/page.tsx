@@ -88,25 +88,25 @@ export default function ProfilePage() {
                     {/* STEP 1: Basic Identity */}
                     {step === 1 && (
                         <div className="space-y-5">
-                            <InputField label={t("input.nickname")} name="nickname" value={formData.nickname} onChange={handleChange} required placeholder="Ex. Hong Gil-dong" />
+                            <InputField label={t("input.nickname")} name="nickname" value={formData.nickname} onChange={handleChange} required placeholder="이름을 입력해주세요" />
                             <div className="grid grid-cols-2 gap-4">
-                                <InputField label={t("input.age")} name="age" value={formData.age} onChange={handleChange} required type="number" placeholder="1990" />
+                                <InputField label={t("input.age")} name="age" value={formData.age} onChange={handleChange} required type="number" placeholder="출생년도 4자리" />
                                 <SelectField label={t("input.gender")} name="gender" value={formData.gender} onChange={handleChange} options={[
                                     { value: "male", label: t("input.gender.male") },
                                     { value: "female", label: t("input.gender.female") },
                                     { value: "other", label: t("input.gender.other") }
                                 ]} />
                             </div>
-                            <InputField label={t("input.job")} name="job" value={formData.job} onChange={handleChange} required placeholder="Ex. Developer" />
-                            <InputField label={t("input.residence")} name="residence" value={formData.residence} onChange={handleChange} required placeholder="Seoul, Korea" />
+                            <InputField label={t("input.job")} name="job" value={formData.job} onChange={handleChange} required placeholder="현재 직무를 입력해주세요" />
+                            <InputField label={t("input.residence")} name="residence" value={formData.residence} onChange={handleChange} required placeholder="거주 지역을 입력해주세요" />
                         </div>
                     )}
 
                     {/* STEP 2: Current State */}
                     {step === 2 && (
                         <div className="space-y-5">
-                            <InputField label={t("input.worry")} name="worry" value={formData.worry} onChange={handleChange} required placeholder="Ex. Career stagnation" />
-                            <InputField label={t("input.emotion")} name="emotion" value={formData.emotion} onChange={handleChange} required placeholder="Ex. Anxious, Bored" />
+                            <InputField label={t("input.worry")} name="worry" value={formData.worry} onChange={handleChange} required placeholder="현재 고민하고 있는 내용을 적어주세요" />
+                            <InputField label={t("input.emotion")} name="emotion" value={formData.emotion} onChange={handleChange} required placeholder="요즘 느끼는 주요 감정을 입력해주세요" />
                             <div className="space-y-2">
                                 <label className="text-sm font-semibold ml-1 text-foreground">{t("input.satisfaction")} ({formData.satisfaction})</label>
                                 <input
@@ -134,7 +134,7 @@ export default function ProfilePage() {
                                 { value: "challenge", label: t("input.decision.challenge") },
                                 { value: "situational", label: t("input.decision.situational") }
                             ]} />
-                            <InputField label={t("input.personality")} name="personality" value={formData.personality} onChange={handleChange} required placeholder="Ex. Realistic, Optimistic" />
+                            <InputField label={t("input.personality")} name="personality" value={formData.personality} onChange={handleChange} required placeholder="성격을 키워드로 입력해주세요" />
                             <SelectField label={t("input.values")} name="values" value={formData.values} onChange={handleChange} options={[
                                 { value: "money", label: t("input.value.money") },
                                 { value: "fame", label: t("input.value.fame") },

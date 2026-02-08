@@ -2,6 +2,8 @@ import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
 
+export const runtime = "edge";
+
 // Define the schema for the Multiverse Report
 const storySchema = z.object({
     universe_id: z.string().describe("Like WORLD-XX-00"),
@@ -44,6 +46,7 @@ const storySchema = z.object({
     }),
     message_to_reality: z.string(),
     teaser: z.string(),
+    full_story: z.string().describe("A long, detailed narrative description of the user's life in this universe (approx 400-600 characters)."),
 });
 
 export async function POST(req: Request) {
@@ -73,8 +76,9 @@ Rules:
    - If they became rich, they might have lost detailed memories or true friends.
    - If they chose love, they might have sacrificed their career ambition.
    - The result should feel "Real" and "Plausible", not like a fairy tale.
-4. **Show, Don't Tell**: In the 'Moments' section, describe sensory details (smell, sound, light).
-5. **Output Format**: STRICTLY return valid JSON.
+4. **Full Story**: In the 'full_story' section, write a deep, immersive narrative about this version of 'Me'. Describe how they feel about their choices and their current daily atmosphere. (Min 5-6 sentences).
+5. **Show, Don't Tell**: In the 'Moments' section, describe sensory details (smell, sound, light).
+6. **Output Format**: STRICTLY return valid JSON.
 
 Data Context:
 - Wealth/Happiness/Health/etc are 0-100. Be harsh. 100 is impossible. A realistic successful life is 70-80.

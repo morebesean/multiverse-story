@@ -56,7 +56,7 @@ export default function ScenarioPage() {
                         Final Step
                     </div>
                     <div>
-                        <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500 pb-1">
+                        <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500 pb-1 whitespace-pre-line">
                             {t("input.alternateChoice")}
                         </h2>
                         <p className="text-muted-foreground whitespace-pre-line mt-2 leading-relaxed">
@@ -68,18 +68,18 @@ export default function ScenarioPage() {
                 {/* Form Section */}
                 <form id="scenario-form" onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                        <label className="text-lg font-bold ml-1 text-foreground flex items-center gap-2">
+                        <label className="text-sm font-semibold ml-1 text-foreground flex items-center gap-2">
                             만약 그때...
-                            <span className="text-xs font-normal text-muted-foreground">* Required</span>
+                            <span className="text-xs font-normal text-muted-foreground">(필수)</span>
                         </label>
                         <Textarea
                             name="whatIf"
                             required
-                            rows={4}
+                            rows={6}
                             value={formData.whatIf}
                             onChange={handleChange}
-                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-lg p-6 leading-relaxed resize-none rounded-2xl"
-                            placeholder="예: 방송국 PD 시험을 포기하지 않고 계속 도전했다면?"
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background text-lg p-6 leading-relaxed resize-none rounded-2xl transition-all"
+                            placeholder="변경하고 싶은 과거의 선택을 입력해주세요."
                         />
                     </div>
 
@@ -89,8 +89,8 @@ export default function ScenarioPage() {
                             name="desire"
                             value={formData.desire}
                             onChange={handleChange}
-                            placeholder="예: 아무도 나를 모르는 곳에서 살고 싶다"
-                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background h-12 rounded-xl transition-all"
+                            placeholder="바라는 삶의 모습을 입력해주세요."
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background h-12 px-4 rounded-xl transition-all text-lg"
                         />
                     </div>
 
@@ -100,8 +100,8 @@ export default function ScenarioPage() {
                             name="constraint"
                             value={formData.constraint}
                             onChange={handleChange}
-                            placeholder="예: 우리 가족은 그대로 있었으면 좋겠다"
-                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background h-12 rounded-xl transition-all"
+                            placeholder="유지하고 싶은 조건을 입력해주세요."
+                            className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background h-12 px-4 rounded-xl transition-all text-lg"
                         />
                     </div>
                 </form>

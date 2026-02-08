@@ -116,7 +116,7 @@ export default function ResultPage() {
 
                     {/* Core Difference Card */}
                     <div className="p-6 bg-secondary/30 rounded-2xl border border-border/50">
-                        <span className="text-sm font-bold text-muted-foreground uppercase tracking-wide block mb-2">Divergence Point</span>
+                        <span className="text-sm font-bold text-muted-foreground uppercase tracking-wide block mb-2">한 줄 요약</span>
                         <p className="font-medium text-foreground text-lg leading-relaxed break-keep">{story.core_difference}</p>
                     </div>
                 </div>
@@ -125,20 +125,20 @@ export default function ResultPage() {
                 <div className="space-y-8">
                     <h2 className="text-2xl font-bold flex items-center gap-3">
                         <UserCircle className="w-6 h-6 text-primary" />
-                        Subject Profile
+                        {t("result.profile.title")}
                     </h2>
                     <div className="grid grid-cols-2 gap-6 text-base">
-                        <ProfileItem label="Age" value={story.profile.age} />
-                        <ProfileItem label="Job" value={story.profile.job} />
-                        <ProfileItem label="Residence" value={story.profile.residence} />
-                        <ProfileItem label="Worry" value={story.profile.main_worry} isLong />
+                        <ProfileItem label={t("result.profile.age")} value={story.profile.age} />
+                        <ProfileItem label={t("result.profile.job")} value={story.profile.job} />
+                        <ProfileItem label={t("result.profile.residence")} value={story.profile.residence} />
+                        <ProfileItem label={t("result.profile.worry")} value={story.profile.main_worry} isLong />
                     </div>
                     <div className="bg-secondary/20 p-6 rounded-2xl space-y-4">
-                        <h3 className="text-base font-bold text-muted-foreground uppercase">Daily Routine</h3>
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">{t("result.routine.title")}</h3>
                         <div className="grid gap-4 text-base">
-                            <RoutineItem time="Morning" text={story.profile.routine.morning} />
-                            <RoutineItem time="Afternoon" text={story.profile.routine.afternoon} />
-                            <RoutineItem time="Night" text={story.profile.routine.night} />
+                            <RoutineItem time={t("result.routine.morning")} text={story.profile.routine.morning} />
+                            <RoutineItem time={t("result.routine.afternoon")} text={story.profile.routine.afternoon} />
+                            <RoutineItem time={t("result.routine.night")} text={story.profile.routine.night} />
                         </div>
                     </div>
                     <blockquote className="border-l-4 border-primary/50 pl-6 py-2 italic text-muted-foreground text-lg leading-relaxed">
@@ -150,26 +150,26 @@ export default function ResultPage() {
                 <div className="space-y-8">
                     <h2 className="text-2xl font-bold flex items-center gap-3">
                         <Activity className="w-6 h-6 text-primary" />
-                        Life Stats
+                        {t("result.stats.title")}
                     </h2>
                     <div className="grid grid-cols-5 gap-3">
-                        <StatItem icon={<DollarSign className="w-5 h-5" />} label="Wealth" value={story.stats.wealth} />
-                        <StatItem icon={<Star className="w-5 h-5" />} label="Fame" value={story.stats.reputation} />
-                        <StatItem icon={<Heart className="w-5 h-5" />} label="Love" value={story.stats.love} />
-                        <StatItem icon={<Activity className="w-5 h-5" />} label="Health" value={story.stats.health} />
-                        <StatItem icon={<Trophy className="w-5 h-5" />} label="Joy" value={story.stats.happiness} />
+                        <StatItem icon={<DollarSign className="w-5 h-5" />} label={t("result.stats.wealth")} value={story.stats.wealth} />
+                        <StatItem icon={<Star className="w-5 h-5" />} label={t("result.stats.fame")} value={story.stats.reputation} />
+                        <StatItem icon={<Heart className="w-5 h-5" />} label={t("result.stats.love")} value={story.stats.love} />
+                        <StatItem icon={<Activity className="w-5 h-5" />} label={t("result.stats.health")} value={story.stats.health} />
+                        <StatItem icon={<Trophy className="w-5 h-5" />} label={t("result.stats.joy")} value={story.stats.happiness} />
                     </div>
                 </div>
 
                 {/* Timeline Section */}
                 <div className="space-y-8">
-                    <h2 className="text-2xl font-bold">Timeline</h2>
+                    <h2 className="text-2xl font-bold">{t("result.timeline.title")}</h2>
                     <div className="space-y-0 relative border-l-2 border-border/50 ml-3 md:ml-6 pl-8 md:pl-10 pb-4">
                         {story.timeline.map((event, idx) => (
                             <div key={idx} className="relative mb-10 last:mb-0">
                                 <div className="absolute -left-[39px] md:-left-[47px] top-1.5 w-5 h-5 rounded-full bg-background border-4 border-primary" />
                                 <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-2">
-                                    <span className="font-mono text-sm font-bold text-primary">{event.year} (Age {event.age})</span>
+                                    <span className="font-mono text-sm font-bold text-primary">{event.year} ({t("result.profile.age")} {event.age})</span>
                                 </div>
                                 <p className="text-base text-foreground/90 leading-relaxed break-keep">{event.event}</p>
                             </div>
@@ -179,7 +179,7 @@ export default function ResultPage() {
 
                 {/* Moments Section */}
                 <div className="space-y-8">
-                    <h2 className="text-2xl font-bold">Cinematic Moments</h2>
+                    <h2 className="text-2xl font-bold">{t("result.moments.title")}</h2>
                     <div className="grid gap-6">
                         {story.moments.map((moment, idx) => (
                             <div key={idx} className="bg-card border border-border/50 p-6 rounded-2xl shadow-sm">
@@ -190,10 +190,23 @@ export default function ResultPage() {
                     </div>
                 </div>
 
+                {/* Full Story Section */}
+                {story.full_story && (
+                    <div className="space-y-8">
+                        <h2 className="text-2xl font-bold">{t("result.story.title")}</h2>
+                        <div className="p-8 bg-secondary/10 border border-primary/10 rounded-3xl relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-primary/50 to-pink-500/50" />
+                            <p className="text-lg leading-loose text-foreground/90 break-keep whitespace-pre-wrap font-medium">
+                                {story.full_story}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 {/* Analysis Section */}
                 <div className="grid md:grid-cols-2 gap-8 pt-6">
                     <div className="space-y-4">
-                        <h3 className="text-base font-bold text-muted-foreground uppercase">What You Gained</h3>
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">{t("result.analysis.gained")}</h3>
                         <ul className="space-y-2">
                             {story.analysis.gained.map((item, i) => (
                                 <li key={i} className="text-base flex items-start gap-3">
@@ -204,7 +217,7 @@ export default function ResultPage() {
                         </ul>
                     </div>
                     <div className="space-y-4">
-                        <h3 className="text-base font-bold text-muted-foreground uppercase">What You Lost</h3>
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">{t("result.analysis.lost")}</h3>
                         <ul className="space-y-2">
                             {story.analysis.lost.map((item, i) => (
                                 <li key={i} className="text-base flex items-start gap-3">
@@ -218,7 +231,7 @@ export default function ResultPage() {
 
                 {/* Message Section */}
                 <div className="py-12 text-center space-y-6">
-                    <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Message from Universe {story.universe_id}</h2>
+                    <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">{story.universe_id} {t("result.message.title")}</h2>
                     <p className="text-2xl md:text-3xl font-serif italic leading-relaxed text-foreground break-keep">
                         "{story.message_to_reality}"
                     </p>
