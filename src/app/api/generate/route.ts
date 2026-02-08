@@ -1,56 +1,101 @@
+import { openai } from "@ai-sdk/openai";
+import { generateObject } from "ai";
+import { z } from "zod";
+
+// Define the schema for the Multiverse Report
+const storySchema = z.object({
+    universe_id: z.string().describe("Like WORLD-XX-00"),
+    world_name: z.string(),
+    core_difference: z.string(),
+    one_line_summary: z.string(),
+    profile: z.object({
+        age: z.number(),
+        job: z.string(),
+        residence: z.string(),
+        routine: z.object({
+            morning: z.string(),
+            afternoon: z.string(),
+            night: z.string(),
+        }),
+        main_worry: z.string(),
+        self_description: z.string(),
+    }),
+    stats: z.object({
+        wealth: z.number().min(0).max(100),
+        happiness: z.number().min(0).max(100),
+        health: z.number().min(0).max(100),
+        reputation: z.number().min(0).max(100),
+        love: z.number().min(0).max(100),
+    }),
+    timeline: z.array(z.object({
+        age: z.number(),
+        year: z.number(),
+        event: z.string(),
+    })).describe("3-4 key milestones"),
+    moments: z.array(z.object({
+        title: z.string(),
+        description: z.string(),
+    })).describe("2 cinematic scenes"),
+    analysis: z.object({
+        gained: z.array(z.string()),
+        lost: z.array(z.string()),
+        envy_point: z.string(),
+        anxiety_point: z.string(),
+    }),
+    message_to_reality: z.string(),
+    teaser: z.string(),
+});
 
 export async function POST(req: Request) {
-    const { prompt } = await req.json();
+    try {
+        const {
+            nickname, age, gender, job, residence,
+            worry, emotion, satisfaction,
+            decisionStyle, personality, values,
+            whatIf, desire, constraint
+        } = await req.json();
 
-    // Encoder to convert string to Uint8Array
-    const encoder = new TextEncoder();
+        const result = await generateObject({
+            model: openai("gpt-4o"),
+            schema: storySchema,
+            system: `
+Role: You are the "Multiverse Archivist". You observe and record parallel timelines.
+Tone: Cinematic, Emotional, Insightful (Black Mirror style).
+Language: Korean.
 
-    // Create a readable stream
-    const customStream = new ReadableStream({
-        async start(controller) {
-            const dummyText = `
-# [멀티버스 No. 824] 스타트업 CEO가 된 당신
+Task:
+Create a "Multiverse Observation Report" based on the User's Reality and 'What If' choice.
 
-당신이 선택한 "취업 대신 창업"의 길은 결코 순탄하지 않았습니다. 
-처음 3년은 라면으로 끼니를 때우며 반지하 사무실에서 밤을 새웠습니다.
+Rules:
+1. **Persona**: You are not a simple AI. You are a narrator observing a real life.
+2. **Reality Anchor**: The alternate 'Me' must feel like the same person, just in a different situation.
+3. **Trade-offs**: Every gain has a loss. High success might mean loneliness. Freedom might mean instability.
+4. **Show, Don't Tell**: In the 'Moments' section, describe sensory details (smell, sound, light).
+5. **Output Format**: STRICTLY return valid JSON.
+            `,
+            prompt: `
+[User Reality]
+- Nickname: ${nickname}
+- Age: ${age}
+- Gender: ${gender}
+- Job: ${job}
+- Residence: ${residence}
+- Current State: ${emotion}, Worrying about "${worry}". Satisfaction ${satisfaction}/10.
+- Personality: ${decisionStyle}, ${personality}
+- Values: ${values}
 
-하지만 당신의 아이디어는 결국 빛을 발했습니다.
-현재 당신은 유니콘 기업 'NextLevel'의 CEO로서, 
-수많은 젊은이들에게 영감을 주는 인물이 되었습니다.
+[The Divergence]
+- What If: "${whatIf}"
+- Hidden Desire: "${desire || 'N/A'}"
+- Reality Constraint: "${constraint || 'N/A'}"
 
-행복 지수: 85%
-주요 사건:
-- 2024년: 첫 투자 유치 성공
-- 2026년: 글로벌 시장 진출
-- 현재: 타임지 선정 '영향력 있는 100인'
+Generate the Multiverse Report now.
+            `,
+        });
 
-물론, 잃은 것도 있습니다. 
-바쁜 일정 탓에 가족과의 시간은 줄어들었고,
-주말에도 마음 편히 쉬지 못하는 날들이 많습니다.
-
-하지만 당신은 지금의 삶을 후회하지 않습니다. 
-당신이 만든 서비스가 세상을 바꾸고 있으니까요.
-      `;
-
-            const chunks = dummyText.split("\n");
-
-            for (const chunk of chunks) {
-                // Simulate processing delay
-                await new Promise((resolve) => setTimeout(resolve, 500));
-
-                // Enqueue the chunk with a newline
-                controller.enqueue(encoder.encode(chunk + "\n"));
-            }
-
-            controller.close();
-        },
-    });
-
-    return new Response(customStream, {
-        headers: {
-            "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-        },
-    });
+        return result.toJsonResponse();
+    } catch (error) {
+        console.error("Generation error:", error);
+        return new Response("Failed to generate story", { status: 500 });
+    }
 }
