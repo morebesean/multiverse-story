@@ -2,8 +2,8 @@ import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
 
-// OpenNext는 기본 Node.js 런타임을 사용 (edge runtime 제거)
-
+// Vercel Edge Runtime 사용 (빠른 응답 속도)
+export const runtime = "edge";
 
 // Define the schema for the Multiverse Report
 const storySchema = z.object({
