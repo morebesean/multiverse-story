@@ -98,116 +98,118 @@ export default function ResultPage() {
             <div className="w-full max-w-2xl px-6 pt-24 space-y-10 animate-fade-in-up">
 
                 {/* Report Header */}
-                <div className="border-b border-border/50 pb-6 space-y-4">
+                <div className="border-b border-border/50 pb-8 space-y-6">
                     <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-mono font-bold uppercase tracking-wider rounded-md">
+                        <span className="px-3 py-1.5 bg-secondary text-secondary-foreground text-sm font-mono font-bold uppercase tracking-wider rounded-md">
                             {story.universe_id}
                         </span>
-                        <span className="text-xs text-muted-foreground font-mono">CONFIDENTIAL</span>
+                        <span className="text-sm text-muted-foreground font-mono">CONFIDENTIAL</span>
                     </div>
-                    <div className="space-y-2">
-                        <h1 className="text-3xl md:text-4xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+                    <div className="space-y-4">
+                        <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 break-keep">
                             {story.title || story.world_name}
                         </h1>
-                        <p className="text-lg text-foreground/80 font-medium italic">
+                        <p className="text-xl text-foreground/80 font-medium italic leading-relaxed break-keep">
                             "{story.one_line_summary}"
                         </p>
                     </div>
 
                     {/* Core Difference Card */}
-                    <div className="p-4 bg-secondary/30 rounded-xl border border-border/50">
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wide block mb-1">Divergence Point</span>
-                        <p className="font-medium text-foreground text-sm">{story.core_difference}</p>
+                    <div className="p-6 bg-secondary/30 rounded-2xl border border-border/50">
+                        <span className="text-sm font-bold text-muted-foreground uppercase tracking-wide block mb-2">Divergence Point</span>
+                        <p className="font-medium text-foreground text-lg leading-relaxed break-keep">{story.core_difference}</p>
                     </div>
                 </div>
 
                 {/* Profile Section */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold flex items-center gap-2">
-                        <UserCircle className="w-5 h-5 text-primary" />
+                <div className="space-y-8">
+                    <h2 className="text-2xl font-bold flex items-center gap-3">
+                        <UserCircle className="w-6 h-6 text-primary" />
                         Subject Profile
                     </h2>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="grid grid-cols-2 gap-6 text-base">
                         <ProfileItem label="Age" value={story.profile.age} />
                         <ProfileItem label="Job" value={story.profile.job} />
                         <ProfileItem label="Residence" value={story.profile.residence} />
-                        <ProfileItem label="Worry" value={story.profile.main_worry} />
+                        <ProfileItem label="Worry" value={story.profile.main_worry} isLong />
                     </div>
-                    <div className="bg-secondary/20 p-4 rounded-xl space-y-3">
-                        <h3 className="text-sm font-bold text-muted-foreground uppercase">Daily Routine</h3>
-                        <div className="grid gap-3 text-sm">
+                    <div className="bg-secondary/20 p-6 rounded-2xl space-y-4">
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">Daily Routine</h3>
+                        <div className="grid gap-4 text-base">
                             <RoutineItem time="Morning" text={story.profile.routine.morning} />
                             <RoutineItem time="Afternoon" text={story.profile.routine.afternoon} />
                             <RoutineItem time="Night" text={story.profile.routine.night} />
                         </div>
                     </div>
-                    <blockquote className="border-l-4 border-primary/50 pl-4 py-1 italic text-muted-foreground">
+                    <blockquote className="border-l-4 border-primary/50 pl-6 py-2 italic text-muted-foreground text-lg leading-relaxed">
                         "{story.profile.self_description}"
                     </blockquote>
                 </div>
 
                 {/* Stats Section */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold flex items-center gap-2">
-                        <Activity className="w-5 h-5 text-primary" />
+                <div className="space-y-8">
+                    <h2 className="text-2xl font-bold flex items-center gap-3">
+                        <Activity className="w-6 h-6 text-primary" />
                         Life Stats
                     </h2>
-                    <div className="grid grid-cols-5 gap-2">
-                        <StatItem icon={<DollarSign className="w-4 h-4" />} label="Wealth" value={story.stats.wealth} />
-                        <StatItem icon={<Star className="w-4 h-4" />} label="Fame" value={story.stats.reputation} />
-                        <StatItem icon={<Heart className="w-4 h-4" />} label="Love" value={story.stats.love} />
-                        <StatItem icon={<Activity className="w-4 h-4" />} label="Health" value={story.stats.health} />
-                        <StatItem icon={<Trophy className="w-4 h-4" />} label="Joy" value={story.stats.happiness} />
+                    <div className="grid grid-cols-5 gap-3">
+                        <StatItem icon={<DollarSign className="w-5 h-5" />} label="Wealth" value={story.stats.wealth} />
+                        <StatItem icon={<Star className="w-5 h-5" />} label="Fame" value={story.stats.reputation} />
+                        <StatItem icon={<Heart className="w-5 h-5" />} label="Love" value={story.stats.love} />
+                        <StatItem icon={<Activity className="w-5 h-5" />} label="Health" value={story.stats.health} />
+                        <StatItem icon={<Trophy className="w-5 h-5" />} label="Joy" value={story.stats.happiness} />
                     </div>
                 </div>
 
                 {/* Timeline Section */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold">Timeline</h2>
-                    <div className="space-y-0 relative border-l-2 border-border/50 ml-3 md:ml-6 pl-6 md:pl-8 pb-2">
+                <div className="space-y-8">
+                    <h2 className="text-2xl font-bold">Timeline</h2>
+                    <div className="space-y-0 relative border-l-2 border-border/50 ml-3 md:ml-6 pl-8 md:pl-10 pb-4">
                         {story.timeline.map((event, idx) => (
-                            <div key={idx} className="relative mb-8 last:mb-0">
-                                <div className="absolute -left-[31px] md:-left-[39px] top-1 w-4 h-4 rounded-full bg-background border-4 border-primary" />
-                                <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-1">
-                                    <span className="font-mono text-xs font-bold text-primary">{event.year} (Age {event.age})</span>
+                            <div key={idx} className="relative mb-10 last:mb-0">
+                                <div className="absolute -left-[39px] md:-left-[47px] top-1.5 w-5 h-5 rounded-full bg-background border-4 border-primary" />
+                                <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-2">
+                                    <span className="font-mono text-sm font-bold text-primary">{event.year} (Age {event.age})</span>
                                 </div>
-                                <p className="text-sm text-foreground/90">{event.event}</p>
+                                <p className="text-base text-foreground/90 leading-relaxed break-keep">{event.event}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Moments Section */}
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold">Cinematic Moments</h2>
-                    <div className="grid gap-4">
+                <div className="space-y-8">
+                    <h2 className="text-2xl font-bold">Cinematic Moments</h2>
+                    <div className="grid gap-6">
                         {story.moments.map((moment, idx) => (
-                            <div key={idx} className="bg-card border border-border/50 p-5 rounded-xl shadow-sm">
-                                <h3 className="font-bold text-lg mb-2 text-foreground">{moment.title}</h3>
-                                <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">{moment.description}</p>
+                            <div key={idx} className="bg-card border border-border/50 p-6 rounded-2xl shadow-sm">
+                                <h3 className="font-bold text-xl mb-3 text-foreground break-keep">{moment.title}</h3>
+                                <p className="text-base leading-loose text-muted-foreground whitespace-pre-wrap break-keep">{moment.description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Analysis Section */}
-                <div className="grid md:grid-cols-2 gap-6 pt-4">
-                    <div className="space-y-3">
-                        <h3 className="text-sm font-bold text-muted-foreground uppercase">What You Gained</h3>
-                        <ul className="space-y-1">
+                <div className="grid md:grid-cols-2 gap-8 pt-6">
+                    <div className="space-y-4">
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">What You Gained</h3>
+                        <ul className="space-y-2">
                             {story.analysis.gained.map((item, i) => (
-                                <li key={i} className="text-sm flex items-start gap-2">
-                                    <span className="text-green-500 font-bold">+</span> {item}
+                                <li key={i} className="text-base flex items-start gap-3">
+                                    <span className="text-green-500 font-bold text-lg leading-none">+</span>
+                                    <span className="break-keep leading-relaxed">{item}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
-                    <div className="space-y-3">
-                        <h3 className="text-sm font-bold text-muted-foreground uppercase">What You Lost</h3>
-                        <ul className="space-y-1">
+                    <div className="space-y-4">
+                        <h3 className="text-base font-bold text-muted-foreground uppercase">What You Lost</h3>
+                        <ul className="space-y-2">
                             {story.analysis.lost.map((item, i) => (
-                                <li key={i} className="text-sm flex items-start gap-2">
-                                    <span className="text-red-500 font-bold">-</span> {item}
+                                <li key={i} className="text-base flex items-start gap-3">
+                                    <span className="text-red-500 font-bold text-lg leading-none">-</span>
+                                    <span className="break-keep leading-relaxed">{item}</span>
                                 </li>
                             ))}
                         </ul>
@@ -215,17 +217,17 @@ export default function ResultPage() {
                 </div>
 
                 {/* Message Section */}
-                <div className="py-8 text-center space-y-4">
+                <div className="py-12 text-center space-y-6">
                     <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Message from Universe {story.universe_id}</h2>
-                    <p className="text-xl md:text-2xl font-serif italic leading-relaxed text-foreground">
+                    <p className="text-2xl md:text-3xl font-serif italic leading-relaxed text-foreground break-keep">
                         "{story.message_to_reality}"
                     </p>
                 </div>
 
                 {/* Teaser */}
-                <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl text-center">
-                    <p className="text-xs font-bold text-primary mb-1">NEXT EPISODE?</p>
-                    <p className="text-sm font-medium">{story.teaser}</p>
+                <div className="p-6 bg-primary/5 border border-primary/20 rounded-2xl text-center">
+                    <p className="text-sm font-bold text-primary mb-2">NEXT EPISODE?</p>
+                    <p className="text-base font-medium break-keep">{story.teaser}</p>
                 </div>
 
             </div>
@@ -239,18 +241,16 @@ export default function ResultPage() {
                             variant="secondary"
                             size="lg"
                             onClick={() => router.push("/scenario")}
-                            className="w-full text-lg h-14 font-bold rounded-xl gap-2"
+                            className="w-full text-lg h-14 font-bold rounded-xl"
                         >
-                            <RefreshCw className="w-4 h-4" />
                             {t("result.retry")}
                         </Button>
 
                         <Button
                             size="lg"
                             onClick={() => alert("Image Generation coming soon!")}
-                            className="w-full text-lg h-14 font-bold rounded-xl gap-2 shadow-xl shadow-primary/20"
+                            className="w-full text-lg h-14 font-bold rounded-xl shadow-xl shadow-primary/20"
                         >
-                            <Share2 className="w-4 h-4" />
                             {t("result.share")}
                         </Button>
                     </div>
@@ -260,11 +260,11 @@ export default function ResultPage() {
     );
 }
 
-function ProfileItem({ label, value }: { label: string, value: string | number }) {
+function ProfileItem({ label, value, isLong }: { label: string, value: string | number, isLong?: boolean }) {
     return (
-        <div className="flex flex-col">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground">{label}</span>
-            <span className="font-medium truncate">{value}</span>
+        <div className={`flex flex-col ${isLong ? 'col-span-2' : ''}`}>
+            <span className="text-[10px] uppercase font-bold text-muted-foreground mb-0.5">{label}</span>
+            <span className={`font-medium break-keep leading-snug ${isLong ? 'text-base' : 'text-base truncate'}`}>{value}</span>
         </div>
     );
 }

@@ -115,10 +115,9 @@ export default function ScenarioPage() {
                         type="submit"
                         form="scenario-form"
                         size="lg"
-                        className="w-full text-lg h-14 font-bold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-none shadow-xl shadow-pink-500/20 gap-2"
+                        className="w-full text-lg h-14 font-bold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-none shadow-xl shadow-pink-500/20"
                     >
                         {t("input.submit")}
-                        <ArrowRight className="w-5 h-5" />
                     </Button>
                 </div>
             </div>

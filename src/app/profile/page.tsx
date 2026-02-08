@@ -76,9 +76,9 @@ export default function ProfilePage() {
                         Step {step} of 3
                     </div>
                     <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 pb-1">
-                        {step === 1 && t("input.title")}
-                        {step === 2 && "현재 상태 체크"}
-                        {step === 3 && "성향 및 가치관"}
+                        {step === 1 && t("input.step1")}
+                        {step === 2 && t("input.step2")}
+                        {step === 3 && t("input.step3")}
                     </h2>
                 </div>
 
@@ -88,25 +88,25 @@ export default function ProfilePage() {
                     {/* STEP 1: Basic Identity */}
                     {step === 1 && (
                         <div className="space-y-5">
-                            <InputField label={t("input.nickname")} name="nickname" value={formData.nickname} onChange={handleChange} required placeholder="홍길동" />
+                            <InputField label={t("input.nickname")} name="nickname" value={formData.nickname} onChange={handleChange} required placeholder="Ex. Hong Gil-dong" />
                             <div className="grid grid-cols-2 gap-4">
                                 <InputField label={t("input.age")} name="age" value={formData.age} onChange={handleChange} required type="number" placeholder="1990" />
                                 <SelectField label={t("input.gender")} name="gender" value={formData.gender} onChange={handleChange} options={[
-                                    { value: "male", label: "남성" },
-                                    { value: "female", label: "여성" },
-                                    { value: "other", label: "기타" }
+                                    { value: "male", label: t("input.gender.male") },
+                                    { value: "female", label: t("input.gender.female") },
+                                    { value: "other", label: t("input.gender.other") }
                                 ]} />
                             </div>
-                            <InputField label={t("input.job")} name="job" value={formData.job} onChange={handleChange} required placeholder="스타트업 PM" />
-                            <InputField label={t("input.residence")} name="residence" value={formData.residence} onChange={handleChange} required placeholder="서울, 대한민국" />
+                            <InputField label={t("input.job")} name="job" value={formData.job} onChange={handleChange} required placeholder="Ex. Developer" />
+                            <InputField label={t("input.residence")} name="residence" value={formData.residence} onChange={handleChange} required placeholder="Seoul, Korea" />
                         </div>
                     )}
 
                     {/* STEP 2: Current State */}
                     {step === 2 && (
                         <div className="space-y-5">
-                            <InputField label={t("input.worry")} name="worry" value={formData.worry} onChange={handleChange} required placeholder="커리어 정체기, 건강 문제 등" />
-                            <InputField label={t("input.emotion")} name="emotion" value={formData.emotion} onChange={handleChange} required placeholder="불안, 권태, 설렘 등" />
+                            <InputField label={t("input.worry")} name="worry" value={formData.worry} onChange={handleChange} required placeholder="Ex. Career stagnation" />
+                            <InputField label={t("input.emotion")} name="emotion" value={formData.emotion} onChange={handleChange} required placeholder="Ex. Anxious, Bored" />
                             <div className="space-y-2">
                                 <label className="text-sm font-semibold ml-1 text-foreground">{t("input.satisfaction")} ({formData.satisfaction})</label>
                                 <input
@@ -130,18 +130,18 @@ export default function ProfilePage() {
                     {step === 3 && (
                         <div className="space-y-5">
                             <SelectField label={t("input.decisionStyle")} name="decisionStyle" value={formData.decisionStyle} onChange={handleChange} options={[
-                                { value: "stability", label: "안정 추구형" },
-                                { value: "challenge", label: "도전 추구형" },
-                                { value: "situational", label: "상황에 따라 다름" }
+                                { value: "stability", label: t("input.decision.stability") },
+                                { value: "challenge", label: t("input.decision.challenge") },
+                                { value: "situational", label: t("input.decision.situational") }
                             ]} />
-                            <InputField label={t("input.personality")} name="personality" value={formData.personality} onChange={handleChange} required placeholder="현실적, 예민함, 낙관적 (키워드 2-3개)" />
+                            <InputField label={t("input.personality")} name="personality" value={formData.personality} onChange={handleChange} required placeholder="Ex. Realistic, Optimistic" />
                             <SelectField label={t("input.values")} name="values" value={formData.values} onChange={handleChange} options={[
-                                { value: "money", label: "돈 (Money)" },
-                                { value: "fame", label: "명예 (Fame)" },
-                                { value: "love", label: "사랑 (Love)" },
-                                { value: "freedom", label: "자유 (Freedom)" },
-                                { value: "power", label: "권력 (Power)" },
-                                { value: "peace", label: "평화 (Peace)" }
+                                { value: "money", label: t("input.value.money") },
+                                { value: "fame", label: t("input.value.fame") },
+                                { value: "love", label: t("input.value.love") },
+                                { value: "freedom", label: t("input.value.freedom") },
+                                { value: "power", label: t("input.value.power") },
+                                { value: "peace", label: t("input.value.peace") }
                             ]} />
                         </div>
                     )}
@@ -156,10 +156,9 @@ export default function ProfilePage() {
                         type="submit"
                         form="profile-form"
                         size="lg"
-                        className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20 gap-2"
+                        className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20"
                     >
-                        {step < 3 ? t("input.next") : "다음 단계로"}
-                        <ChevronRight className="w-5 h-5" />
+                        {step < 3 ? t("input.next") : t("input.next")}
                     </Button>
                 </div>
             </div>
