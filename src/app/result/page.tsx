@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Star, Heart, DollarSign, Activity, Trophy, UserCircle } from "lucide-react";
+import { Loader2, Star, Heart, DollarSign, Activity, Trophy, UserCircle, Check } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ export default function ResultPage() {
     const [story, setStory] = useState<MultiverseStory | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [messageIndex, setMessageIndex] = useState(0);
+    const [showShareToast, setShowShareToast] = useState(false);
     const hasFetched = useRef(false);
     const loadingStartTime = useRef(Date.now());
 
@@ -84,6 +85,38 @@ export default function ResultPage() {
 
         fetchStory();
     }, [router, t]);
+
+    const handleShare = async () => {
+        if (!story) return;
+        const inputStr = localStorage.getItem("multiverse_input");
+        const nickname = inputStr ? JSON.parse(inputStr).nickname : "";
+        const siteUrl = typeof window !== "undefined" ? window.location.origin : "";
+
+        const shareText = [
+            `[${story.universe_id}] ${story.world_name}`,
+            "",
+            story.core_difference,
+            "",
+            t("result.share.service"),
+            siteUrl,
+        ].join("\n");
+
+        try {
+            await navigator.clipboard.writeText(shareText);
+            setShowShareToast(true);
+            setTimeout(() => setShowShareToast(false), 3000);
+        } catch {
+            // fallback for older browsers
+            const textarea = document.createElement("textarea");
+            textarea.value = shareText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            setShowShareToast(true);
+            setTimeout(() => setShowShareToast(false), 3000);
+        }
+    };
 
     if (error) {
         return (
@@ -277,6 +310,34 @@ export default function ResultPage() {
 
             </div>
 
+            {/* Share Toast */}
+            {showShareToast && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
+                    <div className="absolute inset-0 bg-black/40" onClick={() => setShowShareToast(false)} />
+                    <div className="relative bg-background border border-border rounded-2xl p-6 shadow-2xl max-w-sm w-full space-y-4 animate-fade-in-up">
+                        <div className="flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <Check className="w-6 h-6 text-green-600 dark:text-green-400" />
+                            </div>
+                        </div>
+                        <p className="text-center text-base font-medium leading-relaxed break-keep">
+                            {(() => {
+                                const inputStr = localStorage.getItem("multiverse_input");
+                                const nickname = inputStr ? JSON.parse(inputStr).nickname : "";
+                                return nickname + t("result.share.copied");
+                            })()}
+                        </p>
+                        <Button
+                            variant="secondary"
+                            className="w-full"
+                            onClick={() => setShowShareToast(false)}
+                        >
+                            {t("result.share.close")}
+                        </Button>
+                    </div>
+                </div>
+            )}
+
             {/* Fixed Bottom CTA */}
             <div className="fixed bottom-0 w-full max-w-[600px] z-40">
                 <div className="w-full h-32 bg-gradient-to-t from-background via-background/90 to-transparent absolute bottom-0 left-0 -z-10" />
@@ -293,8 +354,8 @@ export default function ResultPage() {
 
                         <Button
                             size="lg"
-                            onClick={() => alert("Image Generation coming soon!")}
-                            className="w-full text-lg h-14 font-bold rounded-xl shadow-xl shadow-primary/20"
+                            onClick={handleShare}
+                            className="w-full text-lg h-14 font-bold rounded-xl shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90"
                         >
                             {t("result.share")}
                         </Button>

@@ -18,6 +18,8 @@ export default function ProfilePage() {
         nickname: "",
         age: "",
         job: "",
+        gender: "",
+        mood: "",
         whatIf: "",
     });
 
@@ -29,8 +31,26 @@ export default function ProfilePage() {
         setIsLoading(false);
     }, []);
 
+    const genderOptions = [
+        { value: "male", label: t("input.gender.male") },
+        { value: "female", label: t("input.gender.female") },
+        { value: "other", label: t("input.gender.other") },
+    ];
+
+    const moodOptions = [
+        { value: "hopeful", label: t("input.mood.hopeful") },
+        { value: "realistic", label: t("input.mood.realistic") },
+        { value: "cynical", label: t("input.mood.cynical") },
+        { value: "dramatic", label: t("input.mood.dramatic") },
+    ];
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
+        if (name === "age") {
+            const digits = value.replace(/[^0-9]/g, "").slice(0, 4);
+            setFormData(prev => ({ ...prev, [name]: digits }));
+            return;
+        }
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -84,7 +104,8 @@ export default function ProfilePage() {
                             <Input
                                 name="age"
                                 required
-                                type="number"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                                 value={formData.age}
                                 onChange={handleChange}
                                 placeholder={t("input.age.placeholder")}
@@ -101,6 +122,48 @@ export default function ProfilePage() {
                                 placeholder={t("input.job.placeholder")}
                                 className="w-full bg-secondary/30 border-2 border-dashed border-primary/20 focus:border-primary/50 focus:bg-background h-12 rounded-xl transition-all"
                             />
+                        </div>
+                    </div>
+
+                    {/* Gender */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold ml-1 text-foreground">{t("input.gender")}</label>
+                        <div className="grid grid-cols-3 gap-2">
+                            {genderOptions.map((opt) => (
+                                <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => setFormData(prev => ({ ...prev, gender: opt.value }))}
+                                    className={`h-11 rounded-xl text-sm font-medium border-2 transition-all cursor-pointer ${
+                                        formData.gender === opt.value
+                                            ? "border-primary bg-primary/10 text-primary"
+                                            : "border-dashed border-primary/20 bg-secondary/30 text-muted-foreground hover:border-primary/40"
+                                    }`}
+                                >
+                                    {opt.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Mood */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold ml-1 text-foreground">{t("input.mood")}</label>
+                        <div className="grid grid-cols-2 gap-2">
+                            {moodOptions.map((opt) => (
+                                <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => setFormData(prev => ({ ...prev, mood: opt.value }))}
+                                    className={`h-11 rounded-xl text-sm font-medium border-2 transition-all cursor-pointer ${
+                                        formData.mood === opt.value
+                                            ? "border-primary bg-primary/10 text-primary"
+                                            : "border-dashed border-primary/20 bg-secondary/30 text-muted-foreground hover:border-primary/40"
+                                    }`}
+                                >
+                                    {opt.label}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
@@ -139,7 +202,7 @@ export default function ProfilePage() {
                         type="submit"
                         form="input-form"
                         size="lg"
-                        className="w-full text-lg h-14 font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-none shadow-xl shadow-primary/20"
+                        className="w-full text-lg h-14 font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90"
                     >
                         {t("input.submit")}
                     </Button>
