@@ -11,24 +11,15 @@ export function Header() {
     const pathname = usePathname();
     const router = useRouter();
 
-    // Route logic:
-    // / (Landing) -> No Back
-    // /profile (Step 2) -> Back to /
-    // /scenario (Step 3) -> Back to /profile
-    // /result (Step 4) -> Home Logo (No Back)
-
     const isLanding = pathname === "/";
     const isProfile = pathname === "/profile";
-    const isScenario = pathname === "/scenario";
     const isResult = pathname === "/result";
 
-    const showBackButton = isProfile || isScenario;
+    const showBackButton = isProfile;
     const showLogo = isLanding || isResult;
 
-    // Custom back logic
     const handleBack = () => {
         if (isProfile) router.push("/");
-        else if (isScenario) router.push("/profile");
         else router.back();
     };
 

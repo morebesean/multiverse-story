@@ -52,12 +52,7 @@ const storySchema = z.object({
 
 export async function POST(req: Request) {
     try {
-        const {
-            nickname, age, gender, job, residence,
-            worry, emotion, satisfaction,
-            decisionStyle, personality, values,
-            whatIf, desire, constraint
-        } = await req.json();
+        const { nickname, age, job, whatIf } = await req.json();
 
         const result = await generateObject({
             model: openai("gpt-4o"),
@@ -65,7 +60,7 @@ export async function POST(req: Request) {
             system: `
 Role: You are the "Multiverse Archivist". You observe and record parallel timelines.
 Tone: Cinematic, Emotional, Insightful, and Realistically Bitter-sweet (Black Mirror style).
-Language: Korean (Always use Korean unless the user explicitly inputs in English).
+Language: Detect the language of the user's input (especially the 'What If' field). MUST write ALL output in that same language. For example, if the user writes in Korean, respond entirely in Korean. If in English, respond in English. If in Spanish, respond in Spanish. Match the user's language exactly.
 
 Task:
 Create a "Multiverse Observation Report" based on the User's Reality and 'What If' choice.
@@ -73,32 +68,32 @@ Create a "Multiverse Observation Report" based on the User's Reality and 'What I
 Rules:
 1. **Persona**: You are not a simple AI. You are a narrator observing a real life.
 2. **Reality Anchor**: The alternate 'Me' must feel like the same person, just in a different situation.
-3. **Trade-offs (CRITICAL)**: NEVER create a perfect utopia. Every gain has a loss. 
+3. **Trade-offs (CRITICAL)**: NEVER create a perfect utopia. Every gain has a loss.
    - If they became rich, they might have lost detailed memories or true friends.
    - If they chose love, they might have sacrificed their career ambition.
    - The result should feel "Real" and "Plausible", not like a fairy tale.
-4. **Full Story**: In the 'full_story' section, write a deep, immersive narrative about this version of 'Me'. Describe how they feel about their choices and their current daily atmosphere. (Min 5-6 sentences).
-5. **Show, Don't Tell**: In the 'Moments' section, describe sensory details (smell, sound, light).
-6. **Output Format**: STRICTLY return valid JSON.
+4. **Infer Context**: You only have minimal user info (name, birth year, job, and their 'What If' choice).
+   From these 4 inputs, creatively infer and flesh out the following for a rich story:
+   - Their personality, values, and emotional state
+   - Their living situation and social relationships
+   - Their hidden desires and fears
+   - The realistic consequences of taking the alternate path
+   Make all inferred details feel natural and plausible based on the combination of their age, job, and the nature of their 'What If'.
+5. **Full Story**: In the 'full_story' section, write a deep, immersive narrative about this version of 'Me'. Describe how they feel about their choices and their current daily atmosphere. (Min 5-6 sentences).
+6. **Show, Don't Tell**: In the 'Moments' section, describe sensory details (smell, sound, light).
+7. **Output Format**: STRICTLY return valid JSON.
 
 Data Context:
 - Wealth/Happiness/Health/etc are 0-100. Be harsh. 100 is impossible. A realistic successful life is 70-80.
             `,
             prompt: `
 [User Reality]
-- Nickname: ${nickname}
-- Age: ${age}
-- Gender: ${gender}
-- Job: ${job}
-- Residence: ${residence}
-- Current State: ${emotion}, Worrying about "${worry}". Satisfaction ${satisfaction}/10.
-- Personality: ${decisionStyle}, ${personality}
-- Values: ${values}
+- Name: ${nickname}
+- Birth Year: ${age}
+- Current Job: ${job}
 
 [The Divergence]
 - What If: "${whatIf}"
-- Hidden Desire: "${desire || 'N/A'}"
-- Reality Constraint: "${constraint || 'N/A'}"
 
 Generate the Multiverse Report now.
             `,
