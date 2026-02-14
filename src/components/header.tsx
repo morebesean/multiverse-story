@@ -12,14 +12,12 @@ export function Header() {
     const router = useRouter();
 
     const isLanding = pathname === "/";
-    const isProfile = pathname === "/profile";
-    const isResult = pathname === "/result";
-
-    const showBackButton = isProfile;
-    const showLogo = isLanding || isResult;
+    const showBackButton = pathname === "/create" || pathname === "/branch";
+    const showLogo = isLanding || pathname === "/result" || pathname === "/chat";
 
     const handleBack = () => {
-        if (isProfile) router.push("/");
+        if (pathname === "/create") router.push("/");
+        else if (pathname === "/branch") router.push("/create");
         else router.back();
     };
 
@@ -37,7 +35,7 @@ export function Header() {
                         <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
                             <Sparkles className="w-5 h-5 text-primary" />
                         </div>
-                        <span className="font-bold text-lg hidden sm:block">Multiverse Story</span>
+                        <span className="font-bold text-lg hidden sm:block">Multiverse</span>
                     </Link>
                 )}
             </div>
